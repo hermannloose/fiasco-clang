@@ -1,20 +1,20 @@
 #include "globalconfig.h"
 
 #define GATE_INITTAB_BEGIN(name)	\
-	.text	1			;\
+	.text				;\
 	.globl	name			;\
 name:					;\
 	.text
 
 #define	GATE_ENTRY(n,entry,type)	\
-	.text	1			;\
+	.text				;\
 	.long	entry			;\
 	.word	n			;\
 	.word	type			;\
 	.text
 
 #define GATE_INITTAB_END		\
-	.text	1			;\
+	.text				;\
 	.long	0			;\
 	.text
 
