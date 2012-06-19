@@ -6,7 +6,7 @@
 
 __BEGIN_DECLS
 
-extern inline void *memcpy(void *dest, const void *src, size_t n)
+extern inline __attribute((gnu_inline)) void *memcpy(void *dest, const void *src, size_t n)
 {
   unsigned dummy1, dummy2, dummy3;
 
