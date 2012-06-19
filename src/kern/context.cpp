@@ -417,7 +417,7 @@ DEFINE_PER_CPU Per_cpu<Clock> Context::_clock(true);
 DEFINE_PER_CPU Per_cpu<Context *> Context::_kernel_ctxt;
 
 IMPLEMENT inline NEEDS["kdb_ke.h"]
-Kobject_iface * __attribute__((nonnull(1, 2)))
+Kobject_iface * __attribute__((nonnull))
 Context_ptr::ptr(Space *s, L4_fpage::Rights *rights) const
 {
   assert_kdb (cpu_lock.test());
