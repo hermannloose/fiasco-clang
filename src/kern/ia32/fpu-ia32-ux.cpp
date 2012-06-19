@@ -93,7 +93,7 @@ Fpu::init_state(Fpu_state *s)
 
       if (_cpu.ext_features() & FEATX_XSAVE)
         memset(reinterpret_cast<Xsave_buffer *>(s->state_buffer())->header, 0,
-	       sizeof (Xsave_buffer::header));
+              sizeof (((Xsave_buffer *) 0)->header));
 
       static_assert(sizeof (sse_regs) == 512, "SSE-regs size not 512 bytes");
     }
