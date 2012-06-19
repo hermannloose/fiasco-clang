@@ -24,9 +24,8 @@ typedef struct __jmp_buf_struct
 
 __BEGIN_DECLS
 
-void longjmp (jmp_buf __env, int __val)
-     __attribute__ ((__noreturn__,__regparm__(3)));
-int  setjmp(jmp_buf env) __attribute__((__regparm__(3)));
+void longjmp (jmp_buf __env, int __val) __attribute__((__noreturn__));
+int  setjmp(jmp_buf env);
 
 __END_DECLS
 
