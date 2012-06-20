@@ -9,12 +9,12 @@
 #include "tcboffset.h"
 
 .macro  PRE_FAST_ALIEN_IPC
-	btrl	$$17, OFS__THREAD__STATE (%ebx)	/* Thread_dis_alien */
+	btrl	$17, OFS__THREAD__STATE (%ebx)	/* Thread_dis_alien */
 	jc	1f
 	RESTORE_STATE
 	popl	%eax
-	andl	$$0x7f, 4(%esp)
-	orl	$$EFLAGS_IF, 8(%esp)
+	andl	$0x7f,4(%esp)
+	orl	$EFLAGS_IF,8(%esp)
 	pushl	$(0x30 << 3 | 2)
 	pushl	$(0xd)
 	pusha
@@ -38,8 +38,8 @@
 .macro  POST_FAST_ALIEN_IPC
 	RESTORE_STATE_AFTER_IPC
 	popl	%eax
-	andl	$$0x7f, 4(%esp)
-	orl	$$EFLAGS_IF, 8(%esp)
+	andl	$0x7f,4(%esp)
+	orl	$EFLAGS_IF, 8(%esp)
 	pushl	$(0x30 << 3 | 6)
 	pushl	$(0xd)
 	pusha
@@ -287,7 +287,7 @@ ret_from_fast_alien_ipc:
 	RESET_THREAD_IPC_MASK_AT %ebx
 	RESTORE_STATE_AFTER_IPC
 	popl    %eax
-	orl	$$EFLAGS_IF, 8(%esp)
+	orl	$EFLAGS_IF, 8(%esp)
 .endm
 
 	.p2align(4)

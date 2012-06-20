@@ -41,7 +41,7 @@
 	.endm
 
 	.macro	DO_SYSEXIT
-	addl	$$8, %esp	/* skip ecx & edx */
+	addl	$8, %esp	/* skip ecx & edx */
 	popl	%esi
 	popl	%edi
 	popl	%ebx
@@ -88,12 +88,12 @@
 	.endm
 
 	.macro	RESTORE_STATE_AFTER_IPC
-	addl	$$4, %esp
+	addl	$4, %esp
 	popl	%edx
 	popl	%esi
 	popl	%edi
 	popl	%ebx
-	addl	$$4, %esp
+	addl	$4, %esp
 	.endm
 
 #define SCRATCH_REGISTER_SIZE 12

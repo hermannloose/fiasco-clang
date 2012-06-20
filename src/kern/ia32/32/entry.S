@@ -57,13 +57,13 @@ entry_##name:							;\
 	jmp	_slowtraps
 
 .macro  PRE_ALIEN_IPC
-	btrl	$$17, OFS__THREAD__STATE (%ebx) /* Thread_dis_alien */
+	btrl	$17, OFS__THREAD__STATE (%ebx) /* Thread_dis_alien */
 	jc	1f
 	RESTORE_STATE
-	subl	$$2, 4(%esp)                /* Correct EIP to point to insn */
+	sub	$2, 4(%esp)                /* Correct EIP to point to insn */
 	popl 	%eax
-	pushl	$$(0x30 << 3 | 2)
-	pushl	$$(0xd)
+	pushl	$(0x30 << 3 | 2)
+	pushl	$(0xd)
 	pusha
 	jmp	_slowtraps
 
@@ -72,11 +72,11 @@ entry_##name:							;\
 .endm
 
 .macro  POST_ALIEN_IPC
-	CHECK_SANITY $$3			/* scratches ecx */
+	CHECK_SANITY $3			/* scratches ecx */
 	RESTORE_STATE_AFTER_IPC
 	popl	%eax
-	pushl	$$(0x30 << 3 | 6)
-	pushl	$$(0xd)
+	pushl	$(0x30 << 3 | 6)
+	pushl	$(0xd)
 	pusha
 	jmp	_slowtraps
 .endm
@@ -549,18 +549,18 @@ alien_sys_ipc_log:
  * output: eax: error code
  */
 .macro SC_ADDR_TO_ERR val
-	subl 	$syscall_table , %eax	/* eax = byte offset to syscall */
-	shr	$$2, %eax		/* convert eax to syscall nr */
-	add 	$$0x30, %eax		/* convert eax to syscall int nr */
-	shl	$$3, %eax		/* construct error code */
-	orl	$$\val, %eax		/* -"- */
+	sub 	$syscall_table , %eax	/* eax = byte offset to syscall */
+	shr	$2, %eax		/* convert eax to syscall nr */
+	add 	$0x30, %eax		/* convert eax to syscall int nr */
+	shl	$3, %eax		/* construct error code */
+	orl	$\val, %eax		/* -"- */
 .endm
 
 alien_sys_call:
 	btrl	$17, OFS__THREAD__STATE (%ebx) /* Thread_dis_alien */
 	jc	1f
 	RESTORE_STATE
-	subl	$2, 4(%esp)		/* Correct EIP to point to insn */
+	sub	$2, 4(%esp)		/* Correct EIP to point to insn */
 	SC_ADDR_TO_ERR 2
 2:	pushl	$0xd
 	xchgl	4(%esp), %eax
@@ -579,7 +579,7 @@ alien_sys_call:
 	jmp	2b
 
 
-	.p2align 4
+	.p2align
 	.globl	leave_by_trigger_exception
 leave_by_trigger_exception:
 	cli
@@ -593,7 +593,7 @@ leave_by_trigger_exception:
 	pusha
 	jmp	_slowtraps
 
-	.p2align 4
+	.p2align
 	.globl	leave_by_vcpu_upcall
 leave_by_vcpu_upcall:
 	cli
@@ -626,7 +626,7 @@ leave_by_vcpu_upcall:
 	lea -20(%ecx), %esp
 
 	push %ebx            /* EBX */
-	subl $4, %esp         /* SKIP PFA */
+	sub $4, %esp         /* SKIP PFA */
 	push %ebp            /* EBP */
 	push %esi            /* ESI */
 	push %edi            /* EDI */
@@ -646,7 +646,7 @@ leave_by_vcpu_upcall:
 	movl $EFLAGS_IF, 8(%esp)
 	iret
 	
-	.p2align 4
+	.p2align
 	.globl	vcpu_resume
 vcpu_resume:
 	mov %eax, %esp
